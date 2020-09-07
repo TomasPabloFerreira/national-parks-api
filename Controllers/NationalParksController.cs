@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using national_parks_api.Models.Dtos;
 using national_parks_api.Repository.IRepository;
 
 namespace national_parks_api.Controllers
@@ -20,6 +21,17 @@ namespace national_parks_api.Controllers
 		{
 			_npRepository = npRepo;
 			_mapper = mapper;
+		}
+
+		[HttpGet]
+		public IActionResult GetNationalParks () {
+			var npDto = new List<NationalParkDto>();
+
+			foreach(var np in _npRepository.GetNationalParks()){
+				npDto.Add(_mapper.Map<NationalParkDto>(np));
+			}
+
+			return Ok(npDto);
 		}
 	}
 }
