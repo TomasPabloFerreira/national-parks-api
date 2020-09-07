@@ -24,13 +24,24 @@ namespace national_parks_api.Controllers
 		}
 
 		[HttpGet]
-		public IActionResult GetNationalParks () {
+		public IActionResult GetNationalParks ()
+		{
 			var npDto = new List<NationalParkDto>();
 
 			foreach(var np in _npRepository.GetNationalParks()){
 				npDto.Add(_mapper.Map<NationalParkDto>(np));
 			}
 
+			return Ok(npDto);
+		}
+
+		[HttpGet("{nationalParkId:int}")]
+		public IActionResult GetNationalPark (int nationalParkId)
+		{
+			var np = _npRepository.GetNationalPark(nationalParkId);
+			if(np == null) return NotFound();
+
+			var npDto = _mapper.Map<NationalParkDto>(np);
 			return Ok(npDto);
 		}
 	}
