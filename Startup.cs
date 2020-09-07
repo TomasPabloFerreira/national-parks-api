@@ -60,6 +60,13 @@ namespace national_parks_api
             app.UseHttpsRedirection();
 
 			app.UseSwagger();
+			app.UseSwaggerUI(options => {
+				options.SwaggerEndpoint(
+					"/swagger/NationalParksOpenAPISpec/swagger.json",
+					"National Parks API"
+				);
+				options.RoutePrefix = "";
+			});
 
             app.UseRouting();
 
