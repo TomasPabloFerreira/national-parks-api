@@ -96,5 +96,24 @@ namespace national_parks_api.Controllers
 
 			return NoContent();
 		}
+
+		[HttpDelete("{nationalParkId:int}")]
+		public IActionResult DeleteNationalPark(int nationalParkId)
+		{
+			if(!_npRepository.NationalParkExists(nationalParkId))
+				return NotFound();
+
+			var np = _npRepository.GetNationalPark(nationalParkId);
+
+			if(!_npRepository.DeleteNationalPark(np)) {
+				ModelState.AddModelError(
+					"",
+					"Something went wrong when deleting the record"
+				);
+				return StatusCode(500, ModelState);
+			}
+
+			return NoContent();
+		}
 	}
 }
