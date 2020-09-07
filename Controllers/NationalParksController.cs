@@ -74,5 +74,27 @@ namespace national_parks_api.Controllers
 				np
 			);
 		}
+
+		[HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
+		public IActionResult UpdateNationalPark(
+			int nationalParkId,
+			[FromBody] NationalParkDto npDto
+		)
+		{
+			if(npDto == null || nationalParkId != npDto.Id)
+				return BadRequest(ModelState);
+
+			var np = _mapper.Map<NationalPark>(npDto);
+
+			if(!_npRepository.UpdateNationalPark(np)) {
+				ModelState.AddModelError(
+					"",
+					$"Something went wrong when updating the record {np.Name}"
+				);
+				return StatusCode(500, ModelState);
+			}
+
+			return NoContent();
+		}
 	}
 }
