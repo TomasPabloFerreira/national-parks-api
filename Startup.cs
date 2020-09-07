@@ -40,11 +40,14 @@ namespace national_parks_api
 				.AddScoped<INationalParkRepository, NationalParkRepository>();
 			services.AddAutoMapper(typeof(Mappings));
 			services.AddSwaggerGen(options => {
-				options.SwaggerDoc("NationalParksOpenAPISpec", 
-				new Microsoft.OpenApi.Models.OpenApiInfo() {
-					Title = "National Parks API",
-					Version = "1"
-				});
+				options.SwaggerDoc(
+					"NationalParksOpenAPISpec", 
+					new Microsoft.OpenApi.Models.OpenApiInfo() {
+						Title = "National Parks API",
+						Version = "1"
+					}
+				);
+				options.IncludeXmlComments("national-parks-api.xml");
 			});
             services.AddControllers();
         }
