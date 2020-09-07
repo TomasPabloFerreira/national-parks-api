@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using national_parks_api.Data;
+using national_parks_api.Repository;
+using national_parks_api.Repository.IRepository;
 
 namespace national_parks_api
 {
@@ -32,6 +34,8 @@ namespace national_parks_api
 					Configuration.GetConnectionString("DefaultConnection")
 				)
 			);
+			services
+				.AddScoped<INationalParkRepository, NationalParkRepository>();
             services.AddControllers();
         }
 
