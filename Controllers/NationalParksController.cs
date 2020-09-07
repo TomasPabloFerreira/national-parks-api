@@ -13,6 +13,7 @@ namespace national_parks_api.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
+	[ProducesResponseType(400)]
 	public class NationalParksController : Controller
 	{
 		private INationalParkRepository _npRepository;
@@ -29,6 +30,7 @@ namespace national_parks_api.Controllers
 		/// </summary>
 		/// <returns></returns>
 		[HttpGet]
+		[ProducesResponseType(200, Type = typeof(List<NationalParkDto>))]
 		public IActionResult GetNationalParks ()
 		{
 			var npDto = new List<NationalParkDto>();
@@ -46,6 +48,9 @@ namespace national_parks_api.Controllers
 		/// <param name="nationalParkId"> The Id of the national park </param>
 		/// <returns></returns>
 		[HttpGet("{nationalParkId:int}", Name = "GetNationalPark")]
+		[ProducesResponseType(200, Type = typeof(NationalParkDto))]
+		[ProducesResponseType(404)]
+		[ProducesDefaultResponseType]
 		public IActionResult GetNationalPark (int nationalParkId)
 		{
 			var np = _npRepository.GetNationalPark(nationalParkId);
@@ -56,6 +61,9 @@ namespace national_parks_api.Controllers
 		}
 
 		[HttpPost]
+		[ProducesResponseType(201, Type = typeof(NationalParkDto))]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
 		public IActionResult CreateNationalPark([FromBody] NationalParkDto npDto)
 		{
 			if(npDto == null) return BadRequest(ModelState);
@@ -85,6 +93,9 @@ namespace national_parks_api.Controllers
 		}
 
 		[HttpPatch("{nationalParkId:int}", Name = "UpdateNationalPark")]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(500)]
 		public IActionResult UpdateNationalPark(
 			int nationalParkId,
 			[FromBody] NationalParkDto npDto
@@ -107,6 +118,10 @@ namespace national_parks_api.Controllers
 		}
 
 		[HttpDelete("{nationalParkId:int}")]
+		[ProducesResponseType(204)]
+		[ProducesResponseType(404)]
+		[ProducesResponseType(409)]
+		[ProducesResponseType(500)]
 		public IActionResult DeleteNationalPark(int nationalParkId)
 		{
 			if(!_npRepository.NationalParkExists(nationalParkId))
