@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using national_parks_api.Data;
 using national_parks_api.Repository;
 using national_parks_api.Repository.IRepository;
+using AutoMapper;
+using national_parks_api.Mapper;
 
 namespace national_parks_api
 {
@@ -36,6 +38,7 @@ namespace national_parks_api
 			);
 			services
 				.AddScoped<INationalParkRepository, NationalParkRepository>();
+			services.AddAutoMapper(typeof(Mappings));
             services.AddControllers();
         }
 
