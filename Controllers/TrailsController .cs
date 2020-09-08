@@ -64,7 +64,7 @@ namespace national_parks_api.Controllers
 		[ProducesResponseType(201, Type = typeof(TrailDto))]
 		[ProducesResponseType(404)]
 		[ProducesResponseType(500)]
-		public IActionResult CreateTrail([FromBody] TrailDto trailDto)
+		public IActionResult CreateTrail([FromBody] TrailCreateDto trailDto)
 		{
 			if(trailDto == null) return BadRequest(ModelState);
 
@@ -98,7 +98,7 @@ namespace national_parks_api.Controllers
 		[ProducesResponseType(500)]
 		public IActionResult UpdateTrail(
 			int TrailId,
-			[FromBody] TrailDto trailDto
+			[FromBody] TrailUpdateDto trailDto
 		)
 		{
 			if(trailDto == null || TrailId != trailDto.Id)
