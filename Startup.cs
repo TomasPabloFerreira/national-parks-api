@@ -38,6 +38,7 @@ namespace national_parks_api
 			);
 			services
 				.AddScoped<INationalParkRepository, NationalParkRepository>();
+			services.AddScoped<ITrailRepository, TrailRepository>();
 			services.AddAutoMapper(typeof(Mappings));
 			services.AddSwaggerGen(options => {
 				options.SwaggerDoc(
