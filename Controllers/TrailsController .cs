@@ -60,6 +60,28 @@ namespace national_parks_api.Controllers
 			return Ok(trailDto);
 		}
 
+		/// <summary>
+		/// Get trails in a national park
+		/// </summary>
+		/// <param name="nationalParkId"> The Id of the national park </param>
+		/// <returns></returns>
+		[HttpGet("InNationalPark/{nationalParkId:int}", Name = "GetTrailsInNationalPark")]
+		[ProducesResponseType(200, Type = typeof(List<TrailDto>))]
+		[ProducesResponseType(404)]
+		[ProducesDefaultResponseType]
+		public IActionResult GetTrailsInNationalPark (int nationalParkId)
+		{
+			var trailList = _trailRepository.GetTrailsInNationalPark(nationalParkId);
+			if(trailList == null) return NotFound();
+
+			var trails = new List<TrailDto>();
+			foreach(var trail in trailList) {
+				trails.Add(_mapper.Map<TrailDto>(trail));
+			}
+
+			return Ok(trails);
+		}
+
 		[HttpPost]
 		[ProducesResponseType(201, Type = typeof(TrailDto))]
 		[ProducesResponseType(404)]
